@@ -32,6 +32,7 @@ app.post('/classify', function(req, res) {
                               temp_dir + req.files.image.name])
 
     classification.stdout.on('data', function (data){
+      console.log(data)
       // Do something with the data returned from python script
       let result = JSON.parse(data)
       let answer,
