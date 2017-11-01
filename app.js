@@ -33,6 +33,7 @@ app.post('/classify', function(req, res) {
 
     classification.stdout.on('data', function (data){
       console.log(data)
+      console.log(data.toString('utf8'))
       // Do something with the data returned from python script
       let result = JSON.parse(data.toString('utf8'))
       console.log(result)
