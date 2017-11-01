@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "^4.16.2",
     "express-fileupload": "^0.3.0",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "png-to-jpeg": "^1.0.1"
   }
 }

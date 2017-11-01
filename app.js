@@ -6,6 +6,7 @@ const
   fs = require("fs"),
   path = require("path"),
   temp_dir = path.join(process.cwd(), 'temp/'),
+  pngToJpeg = require('png-to-jpeg'),
   spawn   = require('child_process').spawn;
 
 // create temp directory if it doesn't exist
@@ -23,6 +24,24 @@ app.use(fileUpload());
 app.use(express.static(temp_dir))
 
 app.post('/classify', function(req, res) {
+  // if no image, error out
+  if (req.files.image == {}) {
+    return res.status(500).send(err)
+  }
+  // if this is a png, convert it to jpeg
+  if (req.files.image.name.match(/.+\.png/gi)) {
+    pngToJpeg({quality: 90})(req.files.image.data)
+      .then(function(output) {
+        console.log("OUTPUT")
+        console.log(output)
+        console.log("END OF OUTPUT")
+        console.log("image")
+        console.log(req.files.image)
+        req.files.image.data = output
+        //fs.writeFileSync("./some-file.jpeg", output)
+        return false
+      })
+  }
   req.files.image.mv(temp_dir + req.files.image.name, function(err) {
     if (err) {
       return res.status(500).send(err)
