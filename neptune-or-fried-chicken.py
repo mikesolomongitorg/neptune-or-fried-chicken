@@ -25,14 +25,18 @@ with tf.Session() as sess:
     # Sort to show labels of first prediction in order of confidence
     top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
 
-    first = True
+    if len(top_k) == 1:
+        print('{"%s": %.5f}')
+        sys.stdout.flush()
+    else:
+        first = True
+        for node_id in top_k:
+            human_string = label_lines[node_id]
+            score = predictions[0][node_id]
 
-    for node_id in top_k:
-        human_string = label_lines[node_id]
-        score = predictions[0][node_id]
-        if first:
-            print('{ "%s": %.5f,' % (human_string, score))
-            first = False
-        else:
-            print('"%s": %.5f}' % (human_string, score))
-            sys.stdout.flush()
+            if first:
+                print('{"%s": %.5f,' % (human_string, score))
+                first = False
+            else:
+                print('"%s": %.5f}' % (human_string, score))
+                sys.stdout.flush()
