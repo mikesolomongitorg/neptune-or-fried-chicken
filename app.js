@@ -1,3 +1,4 @@
+'use strict';
 const
   express = require('express'),
   exphbs = require('express-handlebars'),
