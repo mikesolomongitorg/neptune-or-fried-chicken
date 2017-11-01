@@ -2,7 +2,15 @@ const
   express = require('express'),
   exphbs = require('express-handlebars'),
   fileUpload = require('express-fileupload'),
+  fs = require("fs"),
+  path = require("path"),
+  temp_dir = path.join(process.cwd(), 'temp/'),
   spawn   = require('child_process').spawn;
+
+// create temp directory if it doesn't exist
+if (!fs.existsSync(temp_dir)) {
+  fs.mkdirSync(temp_dir)
+}
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -11,18 +19,17 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.use(fileUpload());
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(temp_dir))
 
 app.post('/classify', function(req, res) {
-
-  req.files.image.mv(__dirname + '/public/temp.jpg', function(err) {
+  req.files.image.mv(temp_dir + req.files.image.name, function(err) {
     if (err) {
       return res.status(500).send(err)
     }
-
+    console.log(temp_dir)
     let classification = spawn('python',
                               ['neptune-or-fried-chicken.py',
-                              __dirname + '/public/temp.jpg'])
+                              temp_dir + req.files.image.name])
 
     classification.stdout.on('data', function (data){
       // Do something with the data returned from python script
@@ -48,7 +55,8 @@ app.post('/classify', function(req, res) {
 
       res.render('index', {
         answer: answer,
-        confidence: confidence
+        confidence: confidence,
+        image: req.files.image.name
       })
 
     });
