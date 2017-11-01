@@ -15,14 +15,14 @@ app.use(express.static(__dirname + '/public'))
 
 app.post('/classify', function(req, res) {
 
-  req.files.image.mv('public/temp.jpg', function(err) {
+  req.files.image.mv(__dirname + '/public/temp.jpg', function(err) {
     if (err) {
       return res.status(500).send(err)
     }
 
     let classification = spawn('python',
                               ['neptune-or-fried-chicken.py',
-                              'public/temp.jpg'])
+                              __dirname + '/public/temp.jpg'])
 
     classification.stdout.on('data', function (data){
       // Do something with the data returned from python script
