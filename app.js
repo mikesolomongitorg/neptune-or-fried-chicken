@@ -11,7 +11,7 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.use(fileUpload());
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'))
 
 app.post('/classify', function(req, res) {
 
