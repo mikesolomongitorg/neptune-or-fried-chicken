@@ -35,5 +35,4 @@ with tf.Session() as sess:
             first = False
         else:
             print('"%s": %.5f}' % (human_string, score))
-
-        sys.stdout.flush()
+            sys.stdout.flush()
