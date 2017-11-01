@@ -1,7 +1,6 @@
 import tensorflow as tf, sys
 
 image_path = sys.argv[1]
-#image_path = "https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e35/21820081_177079662861302_4413949168683319296_n.jpg"
 
 # Read in the image_data
 image_data = tf.gfile.FastGFile(image_path, 'rb').read()
