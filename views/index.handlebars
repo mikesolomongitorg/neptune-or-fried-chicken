@@ -1,0 +1,33 @@
+
+<div class="row">
+
+  <div class="col-xs-12 col-sm-6 offset-sm-3">
+
+    <form action="classify" encType="multipart/form-data" method="POST">
+      <div class="form-group">
+        <label for="inputFile">Upload an image and I'll tell you if the image is of Neptune or if the image is of fried chicken!</label>
+        <input type="file" name="image" class="form-control-file" id="inputFile" aria-describedby="fileHelp">
+        <small id="fileHelp" class="form-text text-muted">Please only upload JPG or JPEG images.</small>
+      </div>
+      <input type="submit" class="btn btn-primary" value="Submit!">
+    </form>
+
+  </div>
+
+</div>
+
+<div class="row text-center" style="padding-top:25px;">
+
+  <div class="col-xs-12 col-sm-6 offset-sm-3">
+
+    {{#if answer}}
+    <div class="alert alert-success text-left" role="alert">
+      This is <strong>{{{answer}}}</strong>!
+      <small class="float-right">confidence: {{{confidence}}}</small>
+    </div>
+    <img src="/temp.jpg" height="250px" width="auto">
+    {{/if}}
+
+  </div>
+
+</div>
